@@ -28,16 +28,25 @@ p {
 }
 
 .bottom-options-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: 20px;
+}
+
+.header-block {
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.buttons-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 .table-block {
     margin-top: 20px;
     align-content: center;
-    /* margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%); */
 }

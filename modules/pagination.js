@@ -2,8 +2,8 @@ import { addQueryParams, createTableBody } from './utils.js';
 import { BASE_URL } from './config.js';
 
 
-function updateTable(newData) {
-    const htmlData = createTableBody(newData);
+function updateTable(newData, pageNum) {
+    const htmlData = createTableBody(newData, pageNum);
     $('#table-body').replaceWith(htmlData);
 }
 
@@ -20,7 +20,7 @@ async function handleClick(isNext = false) {
     const newTableData = await fetch(requestUrl, oprions);
     const newDataJSON = await newTableData.json();
 
-    updateTable(newDataJSON);
+    updateTable(newDataJSON, newPageNum);
     pageNumDiv.html(newPageNum);
 }
 

@@ -5,7 +5,9 @@ function createTableHeader(data) {
     const headerTemplate = _.template(document.getElementById('table-header-template').innerHTML);
     const items = Object.keys(data[0]);
 
-    return headerTemplate({ items });
+    return headerTemplate({
+        items: ['#', ...items, 'actons']
+    });
 }
 
 async function fetchTableData() {
