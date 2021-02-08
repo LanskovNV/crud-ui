@@ -5,7 +5,10 @@ body {
     align-content: center;
 }
 
-h1, h2, h3, p {
+h1,
+h2,
+h3,
+p {
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -19,11 +22,22 @@ p {
     font-style: italic;
 }
 
+.table-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-options-block {
+    margin-top: 20px;
+}
+
 .table-block {
-    margin: 0;
+    margin-top: 20px;
+    align-content: center;
+    /* margin: 0;
     position: absolute;
-    top: 30%;
+    top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
 }

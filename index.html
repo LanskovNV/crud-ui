@@ -1,57 +1,92 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>crud</title>
 
-        <link rel="icon" href="./public/favicon.ico">
-        <link rel="stylesheet" href="index.css">
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>crud</title>
 
-        <script type='text/template' id='table-header-template'>
-            <thead>
+    <link rel="icon" href="./public/favicon.ico">
+    <link rel="stylesheet" href="index.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+
+    <script type='text/template' id='table-header-template'>
+        <thead>
+            <tr>
+                <% items.forEach(function(item) { %>
+                    <th scope="col">
+                        <%- item %>
+                    </th>
+                    <% }); %>
+            </tr>
+        </thead>
+    </script>
+
+    <script type='text/template' id='table-data-template'>
+        <tbody id='table-body'>
+            <% rows.forEach(function(row) { %>
                 <tr>
-                  <% items.forEach(function(item) { %>
-                    <th scope="col"><%- item %></th>
-                  <% }); %>
+                    <td>
+                        <%= row.id %>
+                    </td>
+                    <td>
+                        <%= row.name %>
+                    </td>
+                    <td>
+                        <%= row.surname %>
+                    </td>
+                    <td>
+                        <%= row.birthday_date %>
+                    </td>
+                    <td>
+                        <%= row.position %>
+                    </td>
+                    <td>
+                        <%= row.salary %>
+                    </td>
                 </tr>
-            </thead>
-        </script>
-
-        <script type='text/template' id='table-data-template'>
-            <tbody>
-                <% rows.forEach(function(row) { %>
-                    <tr>
-                        <td><%= row.id %></td>
-                        <td><%= row.name %></td>
-                        <td><%= row.surname %></td>
-                        <td><%= row.birthday_date %></td>
-                        <td><%= row.position %></td>
-                        <td><%= row.salary %></td>
-                    </tr>
                 <% }); %>
-            </tbody>
-        </script>
+        </tbody>
+    </script>
 
-        <script type='module' src='index.js'></script>
-    </head>
+    <script type='module' src='index.js'></script>
+</head>
 
-    <body>
-        <div id='root'>
-            <div id='auth-modal'></div>
-            <div id='create-modal'></div>
-            <div id='update-modal'></div>
+<body>
+    <div id='root'>
 
-            <div id='table-block' class='table-block'>
-                <table id='employee-table' class='table'>
+        <div id='auth-modal'></div>
+        <div id='create-modal'></div>
+        <div id='update-modal'></div>
+        <div id='confirm-modal'></div>
 
-                </table>
+        <div id='header' class='header'></div>
+
+        <div class='table-view'>
+            <div class='top-options-block'></div>
+            <div class='table-block'>
+                <table id='employee-table' class='table table-bordered'></table>
+            </div>
+            <div class='bottom-options-block'>
+                <div id='pagination'>
+                    <ul class="pagination">
+                        <li class="page-item"><button id='previous-button' class="page-link">Previous</button></li>
+                        <li class="page-item">
+                            <div id='page-number' class="page-link">1</div>
+                        </li>
+                        <li class="page-item"><button id='next-button' class="page-link">Next</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </body>
+
+        <div id='footer' class='footer'></div>
+
+    </div>
+</body>
+
 </html>
