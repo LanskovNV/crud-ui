@@ -1,8 +1,10 @@
 import { BASE_URL } from './config.js';
 import { createTableBody } from './utils.js';
+import { tableHeaderTemplate } from '../templates/table-header.js';
+
 
 function createTableHeader(data) {
-    const headerTemplate = _.template(document.getElementById('table-header-template').innerHTML);
+    const headerTemplate = _.template(tableHeaderTemplate);
     const items = Object.keys(data[0]);
 
     return headerTemplate({

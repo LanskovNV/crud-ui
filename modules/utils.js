@@ -1,4 +1,5 @@
 import { PAGE_SIZE } from './config.js';
+import { tableDataTemplate } from '../templates/table-data.js';
 
 
 export function addQueryParams(url, params) {
@@ -12,7 +13,7 @@ export function addQueryParams(url, params) {
 }
 
 export function createTableBody(data, pageNum = 1) {
-    const bodyTemplate = _.template(document.getElementById('table-data-template').innerHTML);
+    const bodyTemplate = _.template(tableDataTemplate);
     const rows = data.map((item, index) => {
         item.index = (pageNum - 1) * PAGE_SIZE + index + 1;
         item.actions = '<i class="bi bi-pencil-square"></i><i class="bi bi-trash"></i>';
