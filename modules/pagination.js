@@ -1,6 +1,24 @@
 import { addQueryParams, createTableBody } from './utils.js';
 import { BASE_URL } from './config.js';
+import { paginationTemplate } from '../templates/pagination.js';
 
+const paginationButtons = [{
+        id: 'previous-button',
+        title: 'Previous',
+        onClick: () => handleClick(),
+    },
+    {
+        id: 'page-number',
+        title: '1',
+        onClick: null,
+        options: 'disabled="true"',
+    },
+    {
+        id: 'next-button',
+        title: 'Next',
+        onClick: () => handleClick(true),
+    },
+];
 
 function updateTable(newData, pageNum) {
     const htmlData = createTableBody(newData, pageNum);
@@ -24,8 +42,18 @@ async function handleClick(isNext = false) {
     pageNumDiv.html(newPageNum);
 }
 
+function createPagination() {
+    const paginationTempl = _.template(paginationTemplate);
+    console.dir(paginationTempl({ items: paginationButtons }))
+    $('#pagination').append(paginationTempl({ items: paginationButtons }));
+}
 
 export default function setupPagination() {
-    $('#previous-button').click(() => handleClick());
-    $('#next-button').click(() => handleClick(true));
+    createPagination();
+
+    paginationButtons.forEach(button => {
+        if (button.onClick) {
+            $(`#${button.id}`).click(button.onClick);
+        }
+    });
 }
