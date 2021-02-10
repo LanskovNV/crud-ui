@@ -5,7 +5,7 @@ export const tableHeaderTemplate = `
             <th scope="col">
                 <%- item %>
             </th>
-            <% }); %>
+        <% }); %>
     </tr>
 </thead>
 `;

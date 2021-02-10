@@ -29,58 +29,26 @@
         <div id='header' class='header-block'>
             <h1> Employees table view </h1>
         </div>
-
         <div class='table-view'>
             <div class='top-options-block'>
-
-                <div class="row g-4">
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <input id="filter-name" type="name" class="form-control" placeholder="Vasja">
-                            <label for="floatingInputGrid">Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <input id="filter-surname" type="surname" class="form-control" placeholder="Pupkin">
-                            <label for="floatingInputGrid">Surname</label>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class='buttons-block'>
-                            <button type="button" class="btn btn-outline-secondary">Apply filters</button>
-                        </div>
-
-                    </div>
-                    <div class="col-md">
-                        <div class='buttons-block'>
-                            <button type="button" class="btn btn-success">Create</button>
-                        </div>
-                    </div>
+                <div id="top-options-block" class="row g-4"></div>
+            </div>
+            <div class='table-block'>
+                <table id='employee-table' class='table table-bordered'></table>
+            </div>
+            <div class='bottom-options-block'>
+                <div id='pagination'>
+                    <ul class="pagination">
+                        <li class="page-item"><button id='previous-button' class="page-link">Previous</button></li>
+                        <li class="page-item">
+                            <div id='page-number' class="page-link">1</div>
+                        </li>
+                        <li class="page-item"><button id='next-button' class="page-link">Next</button></li>
+                    </ul>
                 </div>
             </div>
-
         </div>
-
-        <div class='table-block'>
-            <table id='employee-table' class='table table-bordered'></table>
-        </div>
-
-        <div class='bottom-options-block'>
-            <div id='pagination'>
-                <ul class="pagination">
-                    <li class="page-item"><button id='previous-button' class="page-link">Previous</button></li>
-                    <li class="page-item">
-                        <div id='page-number' class="page-link">1</div>
-                    </li>
-                    <li class="page-item"><button id='next-button' class="page-link">Next</button></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div id='footer' class='footer'></div>
-
+        <div id='footer' class='footer'></div>
     </div>
 </body>
 
