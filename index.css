@@ -1,25 +1,13 @@
 body {
     padding-left: 10%;
     padding-right: 10%;
-    background-color: bisque;
     align-content: center;
 }
 
-h1,
-h2,
-h3,
-p {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 h1 {
+    font-family: Arial, Helvetica, sans-serif;
     text-decoration: underline;
     text-align: center;
-}
-
-p {
-    text-align: center;
-    font-style: italic;
 }
 
 .table-view {
@@ -34,6 +22,10 @@ p {
     margin-top: 20px;
 }
 
+.top-options-block {
+    margin-bottom: 20px;
+}
+
 .header-block {
     margin-top: 10%;
     margin-bottom: 5%;
@@ -44,11 +36,6 @@ p {
     flex-direction: column;
     justify-content: center;
     height: 100%;
-}
-
-.table-block {
-    margin-top: 20px;
-    align-content: center;
 }
 
 .actions-block {
