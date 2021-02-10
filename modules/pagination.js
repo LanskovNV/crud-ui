@@ -44,7 +44,6 @@ async function handleClick(isNext = false) {
 
 function createPagination() {
     const paginationTempl = _.template(paginationTemplate);
-
     $('#pagination').append(paginationTempl({ items: paginationButtons }));
 }
 

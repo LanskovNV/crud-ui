@@ -50,3 +50,9 @@ p {
     margin-top: 20px;
     align-content: center;
 }
+
+.actions-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
