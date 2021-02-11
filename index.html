@@ -17,19 +17,16 @@
     <link rel="icon" href="./public/favicon.ico">
     <link rel="stylesheet" href="index.css">
 
-    <script src='./utils/global-handlers.js'></script>
     <script type='module' src='index.js'></script>
 </head>
 
 <body>
     <div id='root'>
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Launch static backdrop modal
-        </button>
-
-        <div id="universal-modal"></div>
+        <div class="modal fade" id="static-backdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div id='modal-content' class="modal-content"></div>
+            </div>
+        </div>
         <div id='header' class='header-block'>
             <h1> Employees table view </h1>
         </div>

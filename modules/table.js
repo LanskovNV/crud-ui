@@ -1,6 +1,7 @@
 import { BASE_URL } from './config.js';
 import { createTableBody } from './utils.js';
 import { tableHeaderTemplate } from '../templates/table-header.js';
+import openModal from './modal.js';
 
 
 function createTableHeader(data) {
@@ -34,4 +35,5 @@ export default async function createTable() {
 
     tableObj.append(tableHeader);
     tableObj.append(tableBody);
+    tableObj.on('click', openModal);
 }

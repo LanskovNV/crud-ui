@@ -1,5 +1,6 @@
 import { filterInputTemplate } from '../templates/filter-input.js';
 import { optionsButtonTemplate } from '../templates/options-button.js';
+import openModal from './modal.js';
 
 
 export default function createTopOptionsBlock() {
@@ -24,10 +25,12 @@ export default function createTopOptionsBlock() {
         className: 'btn\ btn-outline-secondary',
         title: 'Apply'
     });
-    const addButton = buttonTemplate({
+    const addButtonHTML = buttonTemplate({
         className: 'btn\ btn-success',
         title: 'Create'
     });
+    const addButton = $(addButtonHTML);
+    addButton.on('click', openModal);
 
     topOptionsBlock.append(nameInput);
     topOptionsBlock.append(surnameInput);
