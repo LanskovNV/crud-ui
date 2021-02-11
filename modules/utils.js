@@ -7,14 +7,9 @@ function calculateIndex(pageNum, cnt) {
     return (pageNum - 1) * PAGE_SIZE + cnt + 1;
 }
 
-export function addQueryParams(url, params) {
-    let queryString = '';
-
-    _.forOwn(params, (value, key) => {
-        queryString += `${key}=${value}&`
-    });
-
-    return `${url}?${queryString.slice(0,-1)}`;
+export function updateTable(newData, pageNum) {
+    const htmlData = createTableBody(newData, pageNum);
+    $('#table-body').replaceWith(htmlData);
 }
 
 export function createTableBody(data, pageNum = 1) {

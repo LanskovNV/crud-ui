@@ -1,5 +1,5 @@
-import { addQueryParams, createTableBody } from './utils.js';
-import { BASE_URL } from './config.js';
+import { getEmployees } from './service.js';
+import { updateTable } from './utils.js';
 import { paginationTemplate } from '../templates/pagination.js';
 
 const paginationButtons = [{
@@ -20,23 +20,12 @@ const paginationButtons = [{
     },
 ];
 
-function updateTable(newData, pageNum) {
-    const htmlData = createTableBody(newData, pageNum);
-    $('#table-body').replaceWith(htmlData);
-}
-
 async function handleClick(isNext = false) {
     const pageNumDiv = $('#page-number');
     const pageNum = Number.parseInt(pageNumDiv.text());
     const newPageNum = isNext ? pageNum + 1 : pageNum - 1;
 
-    const requestUrl = addQueryParams(`${BASE_URL}/employees`, { page_num: newPageNum });
-    const oprions = {
-        method: 'GET'
-    };
-
-    const newTableData = await fetch(requestUrl, oprions);
-    const newDataJSON = await newTableData.json();
+    const newDataJSON = await getEmployees({ page_num: newPageNum });
 
     updateTable(newDataJSON, newPageNum);
     pageNumDiv.html(newPageNum);
