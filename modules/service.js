@@ -47,3 +47,41 @@ export async function getEmployees(queryParams) {
 
     return tableData;
 }
+
+export async function putEmployee(id, payload) {
+    console.log('put');
+}
+
+export async function postEmployee(payload) {
+    console.log('post');
+}
+
+export async function deleteEmployee(id) {
+    console.log('delete');
+}
+
+export function getToken(username, password) {
+    const params = {
+        username,
+        password
+    };
+    const options = {
+        method: 'GET',
+    };
+    const requestUrl = addQueryParams(`${BASE_URL}/auth`, params);
+
+    fetch(requestUrl, options)
+        .then(response => {
+            response.json()
+                .then(data => {
+                    localStorage.setItem('token', data.token);
+                });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+export function refreshToken() {
+
+}

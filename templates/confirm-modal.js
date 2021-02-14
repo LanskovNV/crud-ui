@@ -1,4 +1,4 @@
-export const modalTemplate = `
+export const confirmModalTemplate = `
 <div id="modal-content" class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>

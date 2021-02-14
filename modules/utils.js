@@ -7,7 +7,7 @@ function calculateIndex(pageNum, cnt) {
     return (pageNum - 1) * PAGE_SIZE + cnt + 1;
 }
 
-export function updateTable(newData, pageNum) {
+export function updateTable(newData, pageNum = 1) {
     const htmlData = createTableBody(newData, pageNum);
     $('#table-body').replaceWith(htmlData);
 }

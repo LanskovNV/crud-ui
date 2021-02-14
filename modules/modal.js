@@ -1,20 +1,105 @@
-import { modalTemplate } from '../templates/modal.js';
+import { authModalTemplate } from '../templates/auth-modal.js';
+import { confirmModalTemplate } from '../templates/confirm-modal.js';
+import { employeeModalTemplate } from '../templates/employee-modal.js';
+import { getToken, getEmployees, putEmployee, postEmployee, deleteEmployee } from './service.js';
+import { updateTable } from './utils.js';
 
+
+function auth() {
+    console.log('auth');
+    const username = $('#modal-input-username').val();
+    const password = $('#modal-input-password').val();
+
+    getToken(username, password);
+}
+
+function getInputData() {
+    return null;
+}
+
+function updateTableData() {
+    getEmployees()
+        .then(data => {
+            updateTable(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+function createConfirmHandler() {
+    return () => {
+        const payload = getInputData();
+
+        postEmployee(payload)
+            .then(res => {
+                console.log('employee created successfully');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        closeModal();
+        updateTableData();
+    };
+}
+
+function updateConfirmHandler(id) {
+    return id => {
+        const payload = getInputData();
+
+        putEmployee(payload)
+            .then(res => {
+                console.log('employee updated successfully');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        closeModal();
+        updateTableData();
+    };
+}
+
+function deleteConfirmHandler(id) {
+    return id => {
+        deleteEmployee(id)
+            .then(res => {
+                console.log('employee deleted successfully');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        closeModal();
+        updateTableData();
+    }
+}
 
 function updateModalContent(employeeId, modalType) {
+    const token = localStorage.getItem('token');
+    let confirmHandler = () => {};
 
-    console.log(modalType, employeeId);
-    switch (modalType) {
-        case 'auth':
-            break;
-        case 'create':
-            break;
-        case 'update':
-            break;
-        case 'delete':
-            break;
+    if (token) {
+        let modalTemplate;
+
+        switch (modalType) {
+            case 'create':
+                modalTemplate = _.template(employeeModalTemplate);
+                confirmHandler = createConfirmHandler();
+                break;
+            case 'update':
+                modalTemplate = _.template(employeeModalTemplate);
+                confirmHandler = updateConfirmHandler(employeeId);
+                break;
+            case 'delete':
+                modalTemplate = _.template(confirmModalTemplate);
+                confirmHandler = deleteConfirmHandler(employeeId);
+                break;
+        }
+        $('#modal-content').replaceWith(modalTemplate());
+    } else {
+        confirmHandler = auth;
+        $('#modal-content').replaceWith(_.template(authModalTemplate)());
     }
-    $('#modal-content').replaceWith(_.template(modalTemplate)());
+    $('#handle-confirm').on('click', confirmHandler);
 }
 
 function showModal() {
