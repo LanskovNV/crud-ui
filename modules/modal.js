@@ -14,7 +14,15 @@ function auth() {
 }
 
 function getInputData() {
-    return null;
+    const data = {
+        name: $('#modal-input-name').val(),
+        surname: $('#modal-input-surname').val(),
+        birthday_date: $('#modal-input-birthday-date').val(),
+        position: $('#modal-input-position').val(),
+        salary: $('#modal-input-salary').val(),
+    };
+
+    return data;
 }
 
 function updateTableData() {
@@ -34,42 +42,39 @@ function createConfirmHandler() {
         postEmployee(payload)
             .then(res => {
                 console.log('employee created successfully');
+                updateTableData();
             })
             .catch(err => {
                 console.log(err);
             });
-        closeModal();
-        updateTableData();
     };
 }
 
 function updateConfirmHandler(id) {
-    return id => {
+    return () => {
         const payload = getInputData();
 
-        putEmployee(payload)
+        putEmployee(id, payload)
             .then(res => {
                 console.log('employee updated successfully');
+                updateTableData();
             })
             .catch(err => {
                 console.log(err);
             });
-        closeModal();
-        updateTableData();
     };
 }
 
 function deleteConfirmHandler(id) {
-    return id => {
+    return () => {
         deleteEmployee(id)
             .then(res => {
                 console.log('employee deleted successfully');
+                updateTableData();
             })
             .catch(err => {
                 console.log(err);
             });
-        closeModal();
-        updateTableData();
     }
 }
 
@@ -94,7 +99,7 @@ function updateModalContent(employeeId, modalType) {
                 confirmHandler = deleteConfirmHandler(employeeId);
                 break;
         }
-        $('#modal-content').replaceWith(modalTemplate());
+        $('#modal-content').replaceWith(modalTemplate({ id: employeeId }));
     } else {
         confirmHandler = auth;
         $('#modal-content').replaceWith(_.template(authModalTemplate)());

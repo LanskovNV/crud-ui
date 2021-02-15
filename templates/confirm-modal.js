@@ -5,10 +5,10 @@ export const confirmModalTemplate = `
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-        Hello, world!
+        Are you really want to delete user with id <%- id %>?
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Ok</button>
+        <button id="handle-confirm" data-bs-dismiss="modal" type="button" class="btn btn-primary">Delete</button>
     </div>
 </div>`;

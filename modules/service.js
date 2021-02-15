@@ -24,7 +24,7 @@ function addQueryParams(url, params) {
     let queryString = '';
 
     _.forOwn(params, (value, key) => {
-        queryString += `${key}=${value}&`
+        queryString += `${key}=${value}&`;
     });
 
     return `${url}?${queryString.slice(0,-1)}`;
@@ -49,15 +49,63 @@ export async function getEmployees(queryParams) {
 }
 
 export async function putEmployee(id, payload) {
-    console.log('put');
+    const idString = _.toString(id).replace(/\s+/g, '');
+    const url = `${BASE_URL}/employees/${idString}`;
+    const headers = {
+        Authorization: `bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+    }
+    const options = {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers
+    };
+
+    const response = await fetch(url, options);
+    const responseData = await response.json();
+
+    checkTokenStatus(responseData);
+
+    return responseData;
 }
 
 export async function postEmployee(payload) {
-    console.log('post');
+    const url = `${BASE_URL}/employees`;
+    const headers = {
+        Authorization: `bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+    }
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers
+    };
+
+    const response = await fetch(url, options);
+    const responseData = await response.json();
+
+    checkTokenStatus(responseData);
+
+    return responseData;
 }
 
 export async function deleteEmployee(id) {
-    console.log('delete');
+    const idString = _.toString(id).replace(/\s+/g, '');
+    const url = `${BASE_URL}/employees/${idString}`;
+    const headers = {
+        Authorization: `bearer ${localStorage.getItem('token')}`,
+    }
+    const options = {
+        method: 'DELETE',
+        headers
+    };
+
+    const response = await fetch(url, options);
+    const responseData = await response.json();
+
+    checkTokenStatus(responseData);
+
+    return responseData;
 }
 
 export function getToken(username, password) {
@@ -74,7 +122,9 @@ export function getToken(username, password) {
         .then(response => {
             response.json()
                 .then(data => {
-                    localStorage.setItem('token', data.token);
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
                 });
         })
         .catch(err => {
@@ -82,6 +132,9 @@ export function getToken(username, password) {
         });
 }
 
-export function refreshToken() {
-
+function checkTokenStatus(data) {
+    if (data.output.statusCode === 401) {
+        alert('Incorrect token, please login again!');
+        localStorage.removeItem('token');
+    }
 }

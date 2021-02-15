@@ -17,13 +17,7 @@ export function createTableBody(data, pageNum = 1) {
     const rows = data.map((item, index) => {
         item.index = calculateIndex(pageNum, index);
 
-        const actionOptions = {
-            id: item.index,
-            edit: 'edit',
-            remove: 'remove',
-        };
-
-        item.actions = _.template(actionsTemplate)(actionOptions);
+        item.actions = _.template(actionsTemplate)();
         return item;
     });
 
