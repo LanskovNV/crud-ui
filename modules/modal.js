@@ -25,10 +25,13 @@ function getInputData() {
     return data;
 }
 
-function updateTableData() {
-    getEmployees()
+function updateTableData(pageNum) {
+    getEmployees({ page_num: pageNum || $('#page-number').text() })
         .then(data => {
             updateTable(data);
+            if (pageNum) {
+                $('#page-number').html(pageNum);
+            }
         })
         .catch(err => {
             console.log(err);
@@ -42,7 +45,7 @@ function createConfirmHandler() {
         postEmployee(payload)
             .then(res => {
                 console.log('employee created successfully');
-                updateTableData();
+                updateTableData(1);
             })
             .catch(err => {
                 console.log(err);
