@@ -58,8 +58,11 @@ export async function putEmployee(id, payload) {
     const options = {
         method: 'PUT',
         body: JSON.stringify(payload),
+        mode: 'cors',
         headers
     };
+
+    console.log(payload);
 
     const response = await fetch(url, options);
     const responseData = await response.json();
@@ -115,6 +118,7 @@ export function getToken(username, password) {
     };
     const options = {
         method: 'GET',
+        mode: 'cors',
     };
     const requestUrl = addQueryParams(`${BASE_URL}/auth`, params);
 
@@ -133,7 +137,7 @@ export function getToken(username, password) {
 }
 
 function checkTokenStatus(data) {
-    if (data.output.statusCode === 401) {
+    if (data.output && data.output.statusCode === 401) {
         alert('Incorrect token, please login again!');
         localStorage.removeItem('token');
     }

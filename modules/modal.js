@@ -78,12 +78,22 @@ function deleteConfirmHandler(id) {
     }
 }
 
-function updateModalContent(employeeId, modalType) {
+function updateModalContent(employeeData, modalType) {
     const token = localStorage.getItem('token');
     let confirmHandler = () => {};
 
     if (token) {
         let modalTemplate;
+        const employeeId = employeeData && employeeData[0];
+
+        const templateData = {
+            id: employeeId,
+            name: employeeData && employeeData[1] || '',
+            surname: employeeData && employeeData[2] || '',
+            birthday_date: employeeData && employeeData[3] || '',
+            position: employeeData && employeeData[4] || '',
+            salary: employeeData && employeeData[5] || '',
+        };
 
         switch (modalType) {
             case 'create':
@@ -99,7 +109,7 @@ function updateModalContent(employeeId, modalType) {
                 confirmHandler = deleteConfirmHandler(employeeId);
                 break;
         }
-        $('#modal-content').replaceWith(modalTemplate({ id: employeeId }));
+        $('#modal-content').replaceWith(modalTemplate(templateData));
     } else {
         confirmHandler = auth;
         $('#modal-content').replaceWith(_.template(authModalTemplate)());
@@ -117,13 +127,13 @@ export default function openModal(event) {
     if (targetButton) {
         const modalType = targetButton.getAttribute('id');
         const tableRow = event.target.closest('tr');
-        let employeeId;
+        let employeeData;
 
         if (tableRow) {
-            employeeId = tableRow.children[1].innerHTML;
+            employeeData = _.toArray(tableRow.children).slice(1, -1).map(ch => ch.innerHTML.trim());
         }
 
-        updateModalContent(employeeId, modalType);
+        updateModalContent(employeeData, modalType);
         showModal();
     }
 }
