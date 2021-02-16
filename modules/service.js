@@ -62,8 +62,6 @@ export async function putEmployee(id, payload) {
         headers
     };
 
-    console.log(payload);
-
     const response = await fetch(url, options);
     const responseData = await response.json();
 

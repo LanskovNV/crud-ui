@@ -27,8 +27,10 @@ async function handleClick(isNext = false) {
 
     const newDataJSON = await getEmployees({ page_num: newPageNum });
 
-    updateTable(newDataJSON, newPageNum);
-    pageNumDiv.html(newPageNum);
+    if (newDataJSON.length && newDataJSON.length !== 0) {
+        updateTable(newDataJSON, newPageNum);
+        pageNumDiv.html(newPageNum);
+    }
 }
 
 function createPagination() {
