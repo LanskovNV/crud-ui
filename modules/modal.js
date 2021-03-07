@@ -19,7 +19,7 @@ function getInputData() {
         surname: $('#modal-input-surname').val(),
         birthday_date: $('#modal-input-birthday-date').val(),
         position: $('#modal-input-position').val(),
-        salary: $('#modal-input-salary').val(),
+        salary: Number.parseInt($('#modal-input-salary').val(), 10),
     };
 
     return data;
