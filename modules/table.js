@@ -6,7 +6,7 @@ import openModal from './modal.js';
 
 function createTableHeader(data) {
     const headerTemplate = _.template(tableHeaderTemplate);
-    const items = Object.keys(data[0]);
+    const items = Object.keys(data[0]).slice(1);
 
     return headerTemplate({
         items: ['#', ...items, 'actons']

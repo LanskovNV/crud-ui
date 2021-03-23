@@ -17,7 +17,7 @@ export function createTableBody(data, pageNum = 1) {
     const rows = data.map((item, index) => {
         item.index = calculateIndex(pageNum, index);
 
-        item.actions = _.template(actionsTemplate)();
+        item.actions = _.template(actionsTemplate)({ employeeId: item._id });
         return item;
     });
 

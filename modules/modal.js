@@ -134,6 +134,7 @@ export default function openModal(event) {
 
         if (tableRow) {
             employeeData = _.toArray(tableRow.children).slice(1, -1).map(ch => ch.innerHTML.trim());
+            employeeData.unshift(targetButton.getAttribute('employee_id'));
         }
 
         updateModalContent(employeeData, modalType);

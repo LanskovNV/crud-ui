@@ -6,9 +6,6 @@ export const tableDataTemplate = `
                 <%= row.index %>
             </td>
             <td>
-                <%= row.id %>
-            </td>
-            <td>
                 <%= row.name %>
             </td>
             <td>
