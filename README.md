@@ -19,4 +19,4 @@ You can check out live demo [here](https://crud.leins275.xyz)
 
 # Develop
 
-You can use simple http server to run this app locally, for example live server extension in vscode.
+You can use simple http server to run this app locally, for example live server extension in vscode
