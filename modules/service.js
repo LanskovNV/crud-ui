@@ -18,7 +18,7 @@ function addFilters(params) {
 }
 
 function addQueryParams(url, params) {
-    if (!params) {
+    if (!params || Object.keys(params).length === 0) {
         return url;
     }
     let queryString = '';
