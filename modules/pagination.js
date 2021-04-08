@@ -6,6 +6,7 @@ const paginationButtons = [{
         id: 'previous-button',
         title: 'Previous',
         onClick: () => handleClick(),
+        options: 'disabled="true"',
     },
     {
         id: 'page-number',
@@ -16,7 +17,7 @@ const paginationButtons = [{
     {
         id: 'next-button',
         title: 'Next',
-        onClick: () => handleClick(true),
+        onClick: () => handleClick(true)
     },
 ];
 
@@ -27,7 +28,7 @@ async function handleClick(isNext = false) {
 
     const newDataJSON = await getEmployees({ page_num: newPageNum });
 
-    if (newDataJSON.length && newDataJSON.length !== 0) {
+    if (newDataJSON.length !== 0) {
         updateTable(newDataJSON, newPageNum);
         pageNumDiv.html(newPageNum);
     }
@@ -45,5 +46,17 @@ export default function setupPagination() {
         if (button.onClick) {
             $(`#${button.id}`).click(button.onClick);
         }
+    });
+
+    document.getElementById('previous-button').addEventListener('mouseover', () => {
+        const pageNum = Number.parseInt($('#page-number').text());
+        if (pageNum === 1) {
+            $('#previous-button').prop('disabled', true);
+        }
+        $('#next-button').prop('disabled', false);
+    });
+
+    document.getElementById('next-button').addEventListener('mouseover', () => {
+        $('#previous-button').prop('disabled', false);
     });
 }
