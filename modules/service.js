@@ -6,6 +6,7 @@ function addFilters(params) {
 
     const filterName = $('#filter-name').val();
     const filterSurname = $('#filter-surname').val();
+    const salaryOrder = $('#salary-switch').prop('checked')
 
     if (filterName) {
         newParams.name = filterName;
@@ -13,6 +14,7 @@ function addFilters(params) {
     if (filterSurname) {
         newParams.surname = filterSurname;
     }
+    newParams.order = salaryOrder ? 1 : -1;
 
     return newParams;
 }

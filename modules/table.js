@@ -23,5 +23,12 @@ export default async function createTable() {
 
     tableObj.append(tableHeader);
     tableObj.append(tableBody);
+
+    $('#salary').html(`
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="salary-switch">
+        <label class="form-check-label" for="salary-switch">salary</label>
+    </div>`)
+
     tableObj.on('click', openModal);
 }
