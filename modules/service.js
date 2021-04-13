@@ -1,48 +1,16 @@
 import { BASE_URL } from './config.js';
+import { checkTokenStatus, getLocalToken, addQueryParams, addFilters } from './utils.js';
 
-
-function addFilters(params) {
-    const newParams = params || {};
-
-    const filterName = $('#filter-name').val();
-    const filterSurname = $('#filter-surname').val();
-    const salaryOrder = $('#salary-switch').prop('checked')
-
-    if (filterName) {
-        newParams.name = filterName;
-    }
-    if (filterSurname) {
-        newParams.surname = filterSurname;
-    }
-    newParams.order = salaryOrder ? 1 : -1;
-
-    return newParams;
-}
-
-function addQueryParams(url, params) {
-    if (!params || Object.keys(params).length === 0) {
-        return url;
-    }
-    let queryString = '';
-
-    _.forOwn(params, (value, key) => {
-        queryString += `${key}=${value}&`;
-    });
-
-    return `${url}?${queryString.slice(0,-1)}`;
-}
-
-export async function getEmployees(queryParams) {
-    const url = `${BASE_URL}/employees`;
+export async function getEmployees(params) {
+    const baseUrl = `${BASE_URL}/employees`;
+    const queryParameters = addFilters(params);
+    const url = addQueryParams(baseUrl, queryParameters);;
     const options = {
         method: 'GET',
     };
 
-    const params = addFilters(queryParams);
-    const requestUrl = addQueryParams(url, params);
-    const response = await fetch(requestUrl, options);
+    const response = await fetch(url, options);
     const tableData = await response.json();
-
     if (tableData.isBoom) {
         return [];
     }
@@ -51,10 +19,10 @@ export async function getEmployees(queryParams) {
 }
 
 export async function putEmployee(id, payload) {
-    const idString = _.toString(id).replace(/\s+/g, '');
-    const url = `${BASE_URL}/employees/${idString}`;
+    const url = `${BASE_URL}/employees/${id}`;
+    const token = getLocalToken();
     const headers = {
-        Authorization: `bearer ${localStorage.getItem('token')}`,
+        Authorization: `bearer ${token}`,
         'Content-Type': 'application/json',
     }
     const options = {
@@ -66,7 +34,6 @@ export async function putEmployee(id, payload) {
 
     const response = await fetch(url, options);
     const responseData = await response.json();
-
     checkTokenStatus(responseData);
 
     return responseData;
@@ -86,17 +53,16 @@ export async function postEmployee(payload) {
 
     const response = await fetch(url, options);
     const responseData = await response.json();
-
     checkTokenStatus(responseData);
 
     return responseData;
 }
 
 export async function deleteEmployee(id) {
-    const idString = _.toString(id).replace(/\s+/g, '');
-    const url = `${BASE_URL}/employees/${idString}`;
+    const url = `${BASE_URL}/employees/${id}`;
+    const token = getLocalToken();
     const headers = {
-        Authorization: `bearer ${localStorage.getItem('token')}`,
+        Authorization: `bearer ${token}`,
     }
     const options = {
         method: 'DELETE',
@@ -105,40 +71,21 @@ export async function deleteEmployee(id) {
 
     const response = await fetch(url, options);
     const responseData = await response.json();
-
     checkTokenStatus(responseData);
 
     return responseData;
 }
 
-export function getToken(username, password) {
-    const params = {
-        username,
-        password
-    };
+export async function getToken(params) {
     const options = {
         method: 'GET',
         mode: 'cors',
     };
-    const requestUrl = addQueryParams(`${BASE_URL}/auth`, params);
+    const url = addQueryParams(`${BASE_URL}/auth`, params);
 
-    fetch(requestUrl, options)
-        .then(response => {
-            response.json()
-                .then(data => {
-                    if (data.token) {
-                        localStorage.setItem('token', data.token);
-                    }
-                });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
-
-function checkTokenStatus(data) {
-    if (data.output && data.output.statusCode === 401) {
-        alert('Incorrect token, please login again!');
-        localStorage.removeItem('token');
+    const response = await fetch(url, options);
+    const responseData = await response.json();
+    if (responseData.token) {
+        localStorage.setItem('token', responseData.token);
     }
 }

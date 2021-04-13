@@ -6,11 +6,10 @@ import { updateTable } from '../utils.js';
 
 
 function auth() {
-    console.log('auth');
     const username = $('#modal-input-username').val();
     const password = $('#modal-input-password').val();
 
-    getToken(username, password);
+    getToken({ username, password });
 }
 
 function getInputData() {

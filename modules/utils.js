@@ -23,3 +23,45 @@ export function createTableBody(data, pageNum = 1) {
 
     return bodyTemplate({ rows });
 }
+
+export function checkTokenStatus(data) {
+    if (data.output && data.output.statusCode === 401) {
+        alert('Incorrect token, please login again!');
+        localStorage.removeItem('token');
+    }
+}
+
+export function getLocalToken() {
+    return localStorage.getItem('token');
+}
+
+export function addQueryParams(url, params) {
+    if (!params || Object.keys(params).length === 0) {
+        return url;
+    }
+    let queryString = '';
+
+    _.forOwn(params, (value, key) => {
+        queryString += `${key}=${value}&`;
+    });
+
+    return `${url}?${queryString.slice(0,-1)}`;
+}
+
+export function addFilters(params) {
+    const newParams = params || {};
+
+    const filterName = $('#filter-name').val();
+    const filterSurname = $('#filter-surname').val();
+    const salaryOrder = $('#salary-switch').prop('checked')
+
+    if (filterName) {
+        newParams.name = filterName;
+    }
+    if (filterSurname) {
+        newParams.surname = filterSurname;
+    }
+    newParams.order = salaryOrder ? 1 : -1;
+
+    return newParams;
+}
