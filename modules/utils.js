@@ -2,7 +2,6 @@ import { PAGE_SIZE } from './config.js';
 import { tableDataTemplate } from '../templates/table-data.js';
 import { actionsTemplate } from '../templates/actions.js';
 
-
 function calculateIndex(pageNum, cnt) {
     return (pageNum - 1) * PAGE_SIZE + cnt + 1;
 }
@@ -36,16 +35,9 @@ export function getLocalToken() {
 }
 
 export function addQueryParams(url, params) {
-    if (!params || Object.keys(params).length === 0) {
-        return url;
-    }
-    let queryString = '';
-
-    _.forOwn(params, (value, key) => {
-        queryString += `${key}=${value}&`;
-    });
-
-    return `${url}?${queryString.slice(0,-1)}`;
+    const urlObj = new URL(url);
+    urlObj.search = new URLSearchParams(params).toString();
+    return urlObj;
 }
 
 export function addFilters(params) {
