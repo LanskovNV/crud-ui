@@ -1,8 +1,8 @@
-import { authModalTemplate } from '../templates/auth-modal.js';
-import { confirmModalTemplate } from '../templates/confirm-modal.js';
-import { employeeModalTemplate } from '../templates/employee-modal.js';
-import { getToken, getEmployees, putEmployee, postEmployee, deleteEmployee } from './service.js';
-import { updateTable } from './utils.js';
+import { authModalTemplate } from '../../templates/auth-modal.js';
+import { confirmModalTemplate } from '../../templates/confirm-modal.js';
+import { employeeModalTemplate } from '../../templates/employee-modal.js';
+import { getToken, getEmployees, putEmployee, postEmployee, deleteEmployee } from '../service.js';
+import { updateTable } from '../utils.js';
 
 
 function auth() {

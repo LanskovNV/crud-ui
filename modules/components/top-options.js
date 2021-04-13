@@ -1,8 +1,8 @@
-import { filterInputTemplate } from '../templates/filter-input.js';
-import { optionsButtonTemplate } from '../templates/options-button.js';
+import { filterInputTemplate } from '../../templates/filter-input.js';
+import { optionsButtonTemplate } from '../../templates/options-button.js';
 import openModal from './modal.js';
-import { getEmployees } from './service.js';
-import { updateTable } from './utils.js';
+import { getEmployees } from '../service.js';
+import { updateTable } from '../utils.js';
 
 
 export default function createTopOptionsBlock() {

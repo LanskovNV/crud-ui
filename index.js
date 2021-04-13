@@ -1,12 +1,12 @@
-import createTable from './modules/table.js';
-import setupPagination from './modules/pagination.js';
-import createTopOptionsBlock from './modules/top-options.js';
+import createTable from './modules/components/table.js';
+import createPagination from './modules/components/pagination.js';
+import createTopOptionsBlock from './modules/components/top-options.js';
 
 
 function handleDocumentReady() {
     createTopOptionsBlock();
     createTable();
-    setupPagination();
+    createPagination();
 }
 
 $(document).ready(handleDocumentReady);

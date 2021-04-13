@@ -1,6 +1,6 @@
-import { createTableBody } from './utils.js';
-import { getEmployees } from './service.js';
-import { tableHeaderTemplate } from '../templates/table-header.js';
+import { createTableBody } from '../utils.js';
+import { getEmployees } from '../service.js';
+import { tableHeaderTemplate } from '../../templates/table-header.js';
 import openModal from './modal.js';
 
 

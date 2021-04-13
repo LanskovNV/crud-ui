@@ -1,6 +1,6 @@
-import { getEmployees } from './service.js';
-import { updateTable } from './utils.js';
-import { paginationTemplate } from '../templates/pagination.js';
+import { getEmployees } from '../service.js';
+import { updateTable } from '../utils.js';
+import { paginationTemplate } from '../../templates/pagination.js';
 
 const paginationButtons = [{
         id: 'previous-button',
@@ -34,13 +34,9 @@ async function handleClick(isNext = false) {
     }
 }
 
-function createPagination() {
+export default function createPagination() {
     const paginationTempl = _.template(paginationTemplate);
     $('#pagination').append(paginationTempl({ items: paginationButtons }));
-}
-
-export default function setupPagination() {
-    createPagination();
 
     paginationButtons.forEach(button => {
         if (button.onClick) {
