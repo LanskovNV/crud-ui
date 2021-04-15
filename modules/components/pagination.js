@@ -2,7 +2,6 @@ import { updateTable } from '../components/table.js';
 import { paginationTemplate } from '../../templates/pagination.js';
 import { PAGE_SIZE } from '../config.js';
 import { getCurrentPageSize } from '../utils.js';
-import { getContent } from '../dom.js';
 
 const paginationButtons = [{
         id: 'previous-button',
@@ -42,7 +41,7 @@ export default function createPagination() {
     });
 
     $('#employee-table').on('DOMSubtreeModified', () => {
-        const pageNum = Number.parseInt(getContent('page-number'));
+        const pageNum = Number.parseInt($('#page-number').text());
         if (pageNum === 1) {
             $('#previous-button').prop('disabled', true);
         } else if ($('#previous-button').prop('disabled')) {

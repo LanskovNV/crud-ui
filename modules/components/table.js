@@ -4,7 +4,6 @@ import { tableDataTemplate } from '../../templates/table-data.js';
 import { actionsTemplate } from '../../templates/actions.js'
 import { calculateIndex, renderTemplate } from '../utils.js';
 import openModal from './modal.js';
-import { getContent, setContent, updateDOMElement } from '../dom.js';
 
 function getTableHeaderValues(data) {
     const mainFields = Object.keys(data[0]).slice(1);
@@ -18,7 +17,7 @@ function createTableHeader(data) {
 
 function updateTableData(newData, pageNum = 1) {
     const htmlData = createTableBody(newData, pageNum);
-    updateDOMElement('table-body', htmlData);
+    $('#table-body').replaceWith(htmlData);
 }
 
 function createTableBody(data, pageNum = 1) {
@@ -31,11 +30,10 @@ function createTableBody(data, pageNum = 1) {
 }
 
 export function updateTable(pageNum) {
-    const pageNumberId = 'page-number';
-    getEmployees({ page_num: pageNum || getContent(pageNumberId) })
+    getEmployees({ page_num: pageNum || $('#page-number').text() })
         .then(data => {
             if (pageNum)
-                setContent(pageNumberId, pageNum);
+                $('#page-number').html(pageNum);
             updateTableData(data.employees, pageNum);
         })
         .catch(err => {
