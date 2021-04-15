@@ -1,5 +1,4 @@
-import { getEmployees } from '../service.js';
-import { updateTable } from '../utils.js';
+import { updateTable } from '../components/table.js';
 import { paginationTemplate } from '../../templates/pagination.js';
 
 const paginationButtons = [{
@@ -26,12 +25,7 @@ async function handleClick(isNext = false) {
     const pageNum = Number.parseInt(pageNumDiv.text());
     const newPageNum = isNext ? pageNum + 1 : pageNum - 1;
 
-    const newDataJSON = await getEmployees({ page_num: newPageNum });
-
-    if (newDataJSON.length !== 0) {
-        updateTable(newDataJSON, newPageNum);
-        pageNumDiv.html(newPageNum);
-    }
+    updateTable(newPageNum);
 }
 
 export default function createPagination() {

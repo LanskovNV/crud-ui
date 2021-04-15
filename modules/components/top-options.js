@@ -1,8 +1,7 @@
 import { filterInputTemplate } from '../../templates/filter-input.js';
 import { optionsButtonTemplate } from '../../templates/options-button.js';
 import openModal from './modal.js';
-import { getEmployees } from '../service.js';
-import { updateTable } from '../utils.js';
+import { updateTable } from '../components/table.js';
 
 
 export default function createTopOptionsBlock() {
@@ -29,12 +28,7 @@ export default function createTopOptionsBlock() {
         title: 'Apply'
     });
     const applyButton = $(applyButtonHTML);
-    applyButton.on('click', () => {
-        getEmployees()
-            .then(data => {
-                updateTable(data);
-            });
-    });
+    applyButton.on('click', () => updateTable(1));
 
     const addButtonHTML = buttonTemplate({
         className: 'btn\ btn-success',

@@ -1,26 +1,7 @@
 import { PAGE_SIZE } from './config.js';
-import { tableDataTemplate } from '../templates/table-data.js';
-import { actionsTemplate } from '../templates/actions.js';
 
-function calculateIndex(pageNum, cnt) {
+export function calculateIndex(pageNum, cnt) {
     return (pageNum - 1) * PAGE_SIZE + cnt + 1;
-}
-
-export function updateTable(newData, pageNum = 1) {
-    const htmlData = createTableBody(newData, pageNum);
-    $('#table-body').replaceWith(htmlData);
-}
-
-export function createTableBody(data, pageNum = 1) {
-    const bodyTemplate = _.template(tableDataTemplate);
-    const rows = data.map((item, index) => {
-        item.index = calculateIndex(pageNum, index);
-
-        item.actions = _.template(actionsTemplate)({ employeeId: item._id });
-        return item;
-    });
-
-    return bodyTemplate({ rows });
 }
 
 export function checkTokenStatus(data) {
@@ -56,4 +37,21 @@ export function addFilters(params) {
     newParams.order = salaryOrder ? 1 : -1;
 
     return newParams;
+}
+
+function getValueString(data, index) {
+    if (!data || !data[index])
+        return '';
+    return data[index];
+}
+
+export function processModalFields(data) {
+    return {
+        id: getValueString(data, 0),
+        name: getValueString(data, 1),
+        surname: getValueString(data, 2),
+        birthday_date: getValueString(data, 3),
+        position: getValueString(data, 4),
+        salary: getValueString(data, 5),
+    }
 }

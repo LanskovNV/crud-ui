@@ -1,6 +1,8 @@
-import { createTableBody } from '../utils.js';
 import { getEmployees } from '../service.js';
 import { tableHeaderTemplate } from '../../templates/table-header.js';
+import { tableDataTemplate } from '../../templates/table-data.js';
+import { actionsTemplate } from '../../templates/actions.js'
+import { calculateIndex } from '../utils.js';
 import openModal from './modal.js';
 
 
@@ -11,6 +13,36 @@ function createTableHeader(data) {
     return headerTemplate({
         items: ['#', ...items, 'actons']
     });
+}
+
+function updateTableData(newData, pageNum = 1) {
+    const htmlData = createTableBody(newData, pageNum);
+    $('#table-body').replaceWith(htmlData);
+}
+
+function createTableBody(data, pageNum = 1) {
+    const bodyTemplate = _.template(tableDataTemplate);
+    const rows = data.map((item, index) => {
+        item.index = calculateIndex(pageNum, index);
+
+        item.actions = _.template(actionsTemplate)({ employeeId: item._id });
+        return item;
+    });
+
+    return bodyTemplate({ rows });
+}
+
+export function updateTable(pageNum) {
+    getEmployees({ page_num: pageNum || $('#page-number').text() })
+        .then(data => {
+            updateTableData(data);
+            if (pageNum) {
+                $('#page-number').html(pageNum);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 export default async function createTable() {

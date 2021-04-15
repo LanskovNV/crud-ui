@@ -1,8 +1,9 @@
 import { authModalTemplate } from '../../templates/auth-modal.js';
 import { confirmModalTemplate } from '../../templates/confirm-modal.js';
 import { employeeModalTemplate } from '../../templates/employee-modal.js';
-import { getToken, getEmployees, putEmployee, postEmployee, deleteEmployee } from '../service.js';
-import { updateTable } from '../utils.js';
+import { getToken, putEmployee, postEmployee, deleteEmployee } from '../service.js';
+import { processModalFields, getLocalToken } from '../utils.js';
+import { updateTable } from '../components/table.js';
 
 
 function auth() {
@@ -24,19 +25,6 @@ function getInputData() {
     return data;
 }
 
-function updateTableData(pageNum) {
-    getEmployees({ page_num: pageNum || $('#page-number').text() })
-        .then(data => {
-            updateTable(data);
-            if (pageNum) {
-                $('#page-number').html(pageNum);
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
-
 function createConfirmHandler() {
     return () => {
         const payload = getInputData();
@@ -44,7 +32,7 @@ function createConfirmHandler() {
         postEmployee(payload)
             .then(res => {
                 console.log('employee created successfully');
-                updateTableData(1);
+                updateTable();
             })
             .catch(err => {
                 console.log(err);
@@ -59,7 +47,7 @@ function updateConfirmHandler(id) {
         putEmployee(id, payload)
             .then(res => {
                 console.log('employee updated successfully');
-                updateTableData();
+                updateTable();
             })
             .catch(err => {
                 console.log(err);
@@ -72,7 +60,7 @@ function deleteConfirmHandler(id) {
         deleteEmployee(id)
             .then(res => {
                 console.log('employee deleted successfully');
-                updateTableData();
+                updateTable();
             })
             .catch(err => {
                 console.log(err);
@@ -81,21 +69,12 @@ function deleteConfirmHandler(id) {
 }
 
 function updateModalContent(employeeData, modalType) {
-    const token = localStorage.getItem('token');
+    const token = getLocalToken();
     let confirmHandler = () => {};
 
     if (token) {
         let modalTemplate;
-        const employeeId = employeeData && employeeData[0];
-
-        const templateData = {
-            id: employeeId,
-            name: employeeData && employeeData[1] || '',
-            surname: employeeData && employeeData[2] || '',
-            birthday_date: employeeData && employeeData[3] || '',
-            position: employeeData && employeeData[4] || '',
-            salary: employeeData && employeeData[5] || '',
-        };
+        const templateData = processModalFields(employeeData);
 
         switch (modalType) {
             case 'create':
@@ -104,11 +83,11 @@ function updateModalContent(employeeData, modalType) {
                 break;
             case 'update':
                 modalTemplate = _.template(employeeModalTemplate);
-                confirmHandler = updateConfirmHandler(employeeId);
+                confirmHandler = updateConfirmHandler(templateData.id);
                 break;
             case 'delete':
                 modalTemplate = _.template(confirmModalTemplate);
-                confirmHandler = deleteConfirmHandler(employeeId);
+                confirmHandler = deleteConfirmHandler(templateData.id);
                 break;
         }
         $('#modal-content').replaceWith(modalTemplate(templateData));
