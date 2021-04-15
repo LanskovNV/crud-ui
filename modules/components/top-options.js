@@ -2,7 +2,7 @@ import { filterInputTemplate } from '../../templates/filter-input.js';
 import { optionsButtonTemplate } from '../../templates/options-button.js';
 import openModal from './modal.js';
 import { updateTable } from '../components/table.js';
-
+import { renderTemplate } from '../utils.js';
 
 export default function createTopOptionsBlock() {
     const topOptionsBlock = $("#top-options-block");
@@ -21,16 +21,14 @@ export default function createTopOptionsBlock() {
         title: 'Surname'
     });
 
-    const buttonTemplate = _.template(optionsButtonTemplate);
-
-    const applyButtonHTML = buttonTemplate({
+    const applyButtonHTML = renderTemplate(optionsButtonTemplate, {
         className: 'btn\ btn-outline-secondary',
         title: 'Apply'
     });
     const applyButton = $(applyButtonHTML);
     applyButton.on('click', () => updateTable(1));
 
-    const addButtonHTML = buttonTemplate({
+    const addButtonHTML = renderTemplate(optionsButtonTemplate, {
         className: 'btn\ btn-success',
         title: 'Create'
     });

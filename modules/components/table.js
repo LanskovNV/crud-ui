@@ -34,6 +34,7 @@ export function updateTable(pageNum) {
         .then(data => {
             if (pageNum)
                 $('#page-number').html(pageNum);
+            sessionStorage.setItem('totalCount', data.totalCount);
             updateTableData(data.employees, pageNum);
         })
         .catch(err => {
