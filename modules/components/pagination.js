@@ -1,7 +1,7 @@
 import { updateTable } from '../components/table.js';
 import { paginationTemplate } from '../../templates/pagination.js';
 import { PAGE_SIZE } from '../config.js';
-import { getCurrentPageSize } from '../utils.js';
+import { getCurrentPageSize, renderTemplate } from '../utils.js';
 
 const paginationButtons = [{
         id: 'previous-button',
@@ -31,8 +31,8 @@ async function handleClick(isNext = false) {
 }
 
 export default function createPagination() {
-    const paginationTempl = _.template(paginationTemplate);
-    $('#pagination').append(paginationTempl({ items: paginationButtons }));
+    const paginationData = renderTemplate(paginationTemplate, { items: paginationButtons });
+    $('#pagination').append(paginationData);
 
     paginationButtons.forEach(button => {
         if (button.onClick) {
