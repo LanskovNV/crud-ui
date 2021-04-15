@@ -31,7 +31,6 @@ function createConfirmHandler() {
 
         postEmployee(payload)
             .then(res => {
-                console.log('employee created successfully');
                 updateTable();
             })
             .catch(err => {
@@ -46,7 +45,6 @@ function updateConfirmHandler(id) {
 
         putEmployee(id, payload)
             .then(res => {
-                console.log('employee updated successfully');
                 updateTable();
             })
             .catch(err => {
@@ -59,8 +57,7 @@ function deleteConfirmHandler(id) {
     return () => {
         deleteEmployee(id)
             .then(res => {
-                console.log('employee deleted successfully');
-                updateTable();
+                updateTable(1);
             })
             .catch(err => {
                 console.log(err);

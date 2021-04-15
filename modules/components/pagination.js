@@ -1,5 +1,8 @@
 import { updateTable } from '../components/table.js';
 import { paginationTemplate } from '../../templates/pagination.js';
+import { PAGE_SIZE } from '../config.js';
+import { getCurrentPageSize } from '../utils.js';
+import { getContent } from '../dom.js';
 
 const paginationButtons = [{
         id: 'previous-button',
@@ -38,15 +41,17 @@ export default function createPagination() {
         }
     });
 
-    document.getElementById('previous-button').addEventListener('mouseover', () => {
-        const pageNum = Number.parseInt($('#page-number').text());
+    $('#employee-table').on('DOMSubtreeModified', () => {
+        const pageNum = Number.parseInt(getContent('page-number'));
         if (pageNum === 1) {
             $('#previous-button').prop('disabled', true);
+        } else if ($('#previous-button').prop('disabled')) {
+            $('#previous-button').prop('disabled', false);
         }
-        $('#next-button').prop('disabled', false);
-    });
-
-    document.getElementById('next-button').addEventListener('mouseover', () => {
-        $('#previous-button').prop('disabled', false);
+        if (getCurrentPageSize(pageNum) <= PAGE_SIZE) {
+            $('#next-button').prop('disabled', true);
+        } else if ($('#next-button').prop('disabled')) {
+            $('#next-button').prop('disabled', false);
+        }
     });
 }

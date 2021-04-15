@@ -4,6 +4,11 @@ export function calculateIndex(pageNum, cnt) {
     return (pageNum - 1) * PAGE_SIZE + cnt + 1;
 }
 
+export function getCurrentPageSize(pageNum) {
+    const totalCount = sessionStorage.getItem('totalCount');
+    return totalCount - PAGE_SIZE * (pageNum - 1);
+}
+
 export function checkTokenStatus(data) {
     if (data.output && data.output.statusCode === 401) {
         alert('Incorrect token, please login again!');
@@ -54,4 +59,9 @@ export function processModalFields(data) {
         position: getValueString(data, 4),
         salary: getValueString(data, 5),
     }
+}
+
+export function renderTemplate(templateString, data) {
+    const template = _.template(templateString);
+    return template(data);
 }
