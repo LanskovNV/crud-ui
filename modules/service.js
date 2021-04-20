@@ -1,5 +1,5 @@
 import { BASE_URL } from './config.js';
-import { checkTokenStatus, getLocalToken, addQueryParams, addFilters } from './utils.js';
+import { checkTokenStatus, getLocalToken, addQueryParams, addFilters, handleRequest } from './utils.js';
 
 export async function getEmployees(params) {
     const baseUrl = `${BASE_URL}/employees`;
@@ -9,13 +9,7 @@ export async function getEmployees(params) {
         method: 'GET',
     };
 
-    const response = await fetch(url, options);
-    const tableData = await response.json();
-    if (tableData.isBoom) {
-        return [];
-    }
-
-    return tableData;
+    return handleRequest(url, options);
 }
 
 export async function putEmployee(id, payload) {

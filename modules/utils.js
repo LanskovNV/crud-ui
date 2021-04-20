@@ -65,3 +65,16 @@ export function renderTemplate(templateString, data) {
     const template = _.template(templateString);
     return template(data);
 }
+
+export async function handleRequest(url, options) {
+    try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw Error(`${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        calert(error);
+    }
+}
