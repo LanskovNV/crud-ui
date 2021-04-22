@@ -9,13 +9,6 @@ export function getCurrentPageSize(pageNum) {
     return totalCount - PAGE_SIZE * (pageNum - 1);
 }
 
-export function checkTokenStatus(data) {
-    if (data.output && data.output.statusCode === 401) {
-        alert('Incorrect token, please login again!');
-        localStorage.removeItem('token');
-    }
-}
-
 export function getLocalToken() {
     return localStorage.getItem('token');
 }
@@ -66,15 +59,23 @@ export function renderTemplate(templateString, data) {
     return template(data);
 }
 
+function handleError(payload) {
+    if (payload.statusCode === 401) {
+        localStorage.removeItem('token');
+    }
+    throw Error(`${payload.statusCode} - ${payload.error}\n${payload.message}`);
+}
+
 export async function handleRequest(url, options) {
     try {
         const response = await fetch(url, options);
+        const payload = await response.json();
         if (response.ok) {
-            return response.json();
+            return payload;
         } else {
-            throw Error(`${response.status} ${response.statusText}`);
+            handleError(payload);
         }
     } catch (error) {
-        calert(error);
+        alert(error);
     }
 }

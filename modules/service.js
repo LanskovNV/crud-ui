@@ -1,5 +1,5 @@
 import { BASE_URL } from './config.js';
-import { checkTokenStatus, getLocalToken, addQueryParams, addFilters, handleRequest } from './utils.js';
+import { getLocalToken, addQueryParams, addFilters, handleRequest } from './utils.js';
 
 export async function getEmployees(params) {
     const baseUrl = `${BASE_URL}/employees`;
@@ -26,11 +26,7 @@ export async function putEmployee(id, payload) {
         headers
     };
 
-    const response = await fetch(url, options);
-    const responseData = await response.json();
-    checkTokenStatus(responseData);
-
-    return responseData;
+    return handleRequest(url, options);
 }
 
 export async function postEmployee(payload) {
@@ -45,11 +41,7 @@ export async function postEmployee(payload) {
         headers
     };
 
-    const response = await fetch(url, options);
-    const responseData = await response.json();
-    checkTokenStatus(responseData);
-
-    return responseData;
+    return handleRequest(url, options);
 }
 
 export async function deleteEmployee(id) {
@@ -63,11 +55,7 @@ export async function deleteEmployee(id) {
         headers
     };
 
-    const response = await fetch(url, options);
-    const responseData = await response.json();
-    checkTokenStatus(responseData);
-
-    return responseData;
+    return handleRequest(url, options);
 }
 
 export async function getToken(params) {
@@ -77,9 +65,6 @@ export async function getToken(params) {
     };
     const url = addQueryParams(`${BASE_URL}/auth`, params);
 
-    const response = await fetch(url, options);
-    const responseData = await response.json();
-    if (responseData.token) {
-        localStorage.setItem('token', responseData.token);
-    }
+    const payload = await handleRequest(url, options);
+    localStorage.setItem('token', payload.token);
 }
