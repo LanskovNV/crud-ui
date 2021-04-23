@@ -25,7 +25,7 @@ export function addFilters(params) {
     const filter = $('#filter').val();
     const salaryOrder = $('#salary-switch').prop('checked')
 
-    newParams.filter = filter;
+    newParams.filter = filter.trim();
     newParams.order = salaryOrder ? 1 : -1;
 
     return newParams;
