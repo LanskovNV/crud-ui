@@ -22,16 +22,10 @@ export function addQueryParams(url, params) {
 export function addFilters(params) {
     const newParams = params || {};
 
-    const filterName = $('#filter-name').val();
-    const filterSurname = $('#filter-surname').val();
+    const filter = $('#filter').val();
     const salaryOrder = $('#salary-switch').prop('checked')
 
-    if (filterName) {
-        newParams.name = filterName;
-    }
-    if (filterSurname) {
-        newParams.surname = filterSurname;
-    }
+    newParams.filter = filter;
     newParams.order = salaryOrder ? 1 : -1;
 
     return newParams;

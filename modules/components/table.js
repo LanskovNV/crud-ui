@@ -60,5 +60,8 @@ export default async function createTable() {
         <label class="form-check-label" for="salary-switch">salary</label>
     </div>`);
 
+    $('#salary-switch').change(() => {
+        updateTable();
+    })
     tableObj.on('click', openModal);
 }
